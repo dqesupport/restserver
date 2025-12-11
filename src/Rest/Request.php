@@ -5,28 +5,30 @@ namespace Rest;
   * Class Rest_Request
   * Holds the Request in a RestServer
   */
+class Request
+{
+    private $rest;
 
-class Request {
+    private $requestURI;
+    private $URIParts;
 
-    private $rest ;
+    private $requestMethod;
+    private $get;
+    private $post;
+    private $files;
+    private $headers;
 
-    private $requestURI ;
-    private $URIParts ; 
+    public string $domain;
+    public string $URL;
 
-    private $requestMethod ;
-    private $get ;
-    private $post ;
-    private $files ;
-    private $headers ;
-
-   /**
-    * Constructor of Rest\Request
-    * @param Rest\Server $rest = null, Parent Rest\Server
-    */
-    public function __construct(Server $rest=null) {
-
+    /**
+     * Constructor of Rest\Request
+     * @param Rest\Server $rest = null, Parent Rest\Server
+     */
+    public function __construct(Server $rest = null)
+    {
         // Sets most of the parameters
-        $this->rest = $rest ;
+        $this->rest = $rest;
 
         if(isset($_SERVER["REQUEST_METHOD"]))
             $this->requestMethod = $_SERVER["REQUEST_METHOD"];
@@ -44,11 +46,6 @@ class Request {
         $this->files = $_FILES?$_FILES:array() ;
 
         $this->headers = array();
-        /*
-        foreach (getallheaders() as $name => $value) {
-            $this->headers[$name] = $value;
-        }
-        */
         foreach($_SERVER as $name=>$value) {
             if(substr($name,0,5) == "HTTP_") {
                 $hName = substr($name,5);
