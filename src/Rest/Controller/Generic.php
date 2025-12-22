@@ -1,17 +1,23 @@
 <?php
 namespace Rest\Controller;
 
-class Generic implements \Rest\Controller{
+class Generic implements \Rest\Controller
+{
+    /** @var callable */
+    public $dunno;
 
-    function __construct($var=null) {
+    function __construct($var)
+    {
         $this->dunno = $var;
     }
 
-    function execute(\Rest\Server $rest) {
-        return call_user_func($this->dunno,$rest);
+    function execute(\Rest\Server $rest)
+    {
+        return call_user_func($this->dunno, $rest);
     }
 
-    function NotFound($rest) {
+    function NotFound($rest)
+    {
         $rest->getResponse()->addHeader("HTTP/1.1 404 NOT FOUND");
         $rest->getResponse()->setResponse("HTTP/1.1 404 NOT FOUND");
         return $rest;
